@@ -42,10 +42,10 @@ class GamePanel extends JPanel implements ActionListener {
 
 	public void startGame() {
 		for (int i = 0; i < snakeLength; i++) {
-	        x[i] = SCREEN_WIDTH / 2 - (i * UNIT_SIZE);
-	        y[i] = SCREEN_HEIGHT / 2;
-	    }
-		
+			x[i] = SCREEN_WIDTH / 2 - (i * UNIT_SIZE);
+			y[i] = SCREEN_HEIGHT / 2;
+		}
+
 		newTarget();
 		running = true;
 		timer = new Timer(DELAY, this);
@@ -86,7 +86,31 @@ class GamePanel extends JPanel implements ActionListener {
 	}
 
 	public void move() {
-		
+
+		// shifting snakes body by 1
+		for (int i = snakeLength; i > 0; i--) {
+			x[i] = x[i - 1];
+			y[i] = y[i - 1];
+		}
+
+		// moving snake head
+		switch (direction) {
+		case 'W':
+			y[0] = y[0] - UNIT_SIZE;
+			break;
+
+		case 'S':
+			y[0] = y[0] + UNIT_SIZE;
+			break;
+
+		case 'D':
+			x[0] = x[0] + UNIT_SIZE;
+			break;
+
+		case 'A':
+			x[0] = x[0] - UNIT_SIZE;
+			break;
+		}
 	}
 
 	public void checkTarget() {
@@ -114,7 +138,32 @@ class GamePanel extends JPanel implements ActionListener {
 	public class MyKeyAdapter extends KeyAdapter {
 		@Override
 		public void keyPressed(KeyEvent e) {
-			
+			switch (e.getKeyCode()) {
+
+			case KeyEvent.VK_LEFT:
+				if (direction != 'D') {
+					direction = 'A';
+				}
+				break;
+
+			case KeyEvent.VK_RIGHT:
+				if (direction != 'A') {
+					direction = 'D';
+				}
+				break;
+
+			case KeyEvent.VK_UP:
+				if (direction != 'S') {
+					direction = 'W';
+				}
+				break;
+
+			case KeyEvent.VK_DOWN:
+				if (direction != 'W') {
+					direction = 'S';
+				}
+				break;
+			}
 		}
 	}
 
