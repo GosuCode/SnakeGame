@@ -114,7 +114,11 @@ class GamePanel extends JPanel implements ActionListener {
 	}
 
 	public void checkTarget() {
-
+		if((x[0] == targetX) && (y[0] == targetY)) {
+			snakeLength++;
+			targetKilled++;
+			newTarget();
+		}
 	}
 
 	public void checkCollisions() {
