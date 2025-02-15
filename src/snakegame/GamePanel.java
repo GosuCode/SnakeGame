@@ -1,6 +1,7 @@
 package snakegame;
 
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -9,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Random;
-import java.util.Timer;
 
 class GamePanel extends JPanel implements ActionListener {
 	
@@ -28,7 +28,7 @@ class GamePanel extends JPanel implements ActionListener {
 	boolean running = false;
 	Timer timer;
 	Random random;
-	
+
 //	 Setting up UI and starting the game
 	public GamePanel() {
 		random = new Random();
@@ -41,19 +41,30 @@ class GamePanel extends JPanel implements ActionListener {
 	}
 	
 	public void startGame() {
-		
+		newTarget();
+		running = true;
+		timer = new Timer(DELAY,this);
+		timer.start();
 	}
 	
 	public void paintComponent(Graphics g) {
-		
+		super.paintComponent(g);
+		draw(g);
 	}
 	
 	public void draw(Graphics g) {
+		for(int i=0; i<SCREEN_HEIGHT/UNIT_SIZE; i++) {
+			g.drawLine(i*UNIT_SIZE, 0, i*UNIT_SIZE, SCREEN_HEIGHT); 
+			g.drawLine(0, i*UNIT_SIZE, SCREEN_WIDTH, i*UNIT_SIZE);
+		}
 		
+		g.setColor(Color.red);
+		g.fillOval(targetX, targetY, UNIT_SIZE, UNIT_SIZE);
 	}
 	
 	public void newTarget() {
-
+		targetX = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE)) * UNIT_SIZE;
+		targetY = random.nextInt((int)(SCREEN_HEIGHT/UNIT_SIZE)) * UNIT_SIZE;
 	}
 	
 	public void move() {
@@ -71,7 +82,7 @@ class GamePanel extends JPanel implements ActionListener {
 	public void gameOver(Graphics g) {
 		
 	}
-
+	
   @Override
   public void actionPerformed(java.awt.event.ActionEvent e) {
     System.out.println("Action Performed");
