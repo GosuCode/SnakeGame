@@ -2,6 +2,8 @@ package snakegame;
 
 import javax.swing.JPanel;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -27,7 +29,15 @@ class GamePanel extends JPanel implements ActionListener {
 	Timer timer;
 	Random random;
 	
+//	 Setting up UI and starting the game
 	public GamePanel() {
+		random = new Random();
+		this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+		this.setBackground(Color.black);
+		this.setFocusable(true);
+		this.addKeyListener(new MyKeyAdapter());
+		
+		startGame();
 	}
 	
 	public void startGame() {
@@ -40,6 +50,10 @@ class GamePanel extends JPanel implements ActionListener {
 	
 	public void draw(Graphics g) {
 		
+	}
+	
+	public void newTarget() {
+
 	}
 	
 	public void move() {
